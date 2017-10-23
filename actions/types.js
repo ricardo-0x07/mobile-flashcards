@@ -1,0 +1,11 @@
+export const RECEIVE_DECKS = 'RECEIVE_DECKS';
+export const ADD_DECK = 'ADD_DECK';
+export const RECEIVE_CARDS = 'RECEIVE_CARDS';
+export const ADD_CARD = 'ADD_CARD';
+export const DECK_UPDATE = 'DECK_UPDATE';
+export const DECK_CREATE = 'DECK_CREATE';
+export const DECK_SAVED_SUCCESS = 'DECK_SAVED_SUCCESS';
+export const CARD_UPDATE = 'CARD_UPDATE';
+export const CARD_CREATE = 'CARD_CREATE';
+export const CARD_SAVED_SUCCESS = 'CARD_SAVED_SUCCESS';
+export const CLEARED_STORAGE = 'CLEARED_STORAGE';

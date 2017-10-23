@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "sdkVersion": "21.0.0",
+    "orientation": "portrait",
+    "name": "FlashCards",
+    "description": "The best mobile flash card app in the world.",
+    "slug": "flashcards",
+    "version": "1.0",
+    "icon": "https://maxcdn.icons8.com/Color/PNG/512/Sports/triathlon-512.png",
+    "notification": {
+      "icon": "http://www.student-scholarships.com/images/made/img/featured/nav_basketball_45_45.png"
+    },
+    "ios": {
+     "bundleIdentifier": "org.flashcards.exp",
+    },
+    "android": {
+     "package": "org.flashcards.exp",
+    }
+  }
+}
