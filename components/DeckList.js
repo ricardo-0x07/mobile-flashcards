@@ -26,7 +26,7 @@ class DeckList extends Component {
     render() {
         if(!this.state.decks.length > 0) {
             return (
-                <View>
+                <View style={styles.view}>
                     <AppLoading />
                     <Text>Create Your First Flash Cards Deck</Text>
                 </View>
@@ -44,6 +44,12 @@ class DeckList extends Component {
 }
 
 const styles = StyleSheet.create({
+    view: {
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     container: {
         flex: 1
     }
