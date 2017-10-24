@@ -1,6 +1,9 @@
 # React Nanodegree: Mobile-Flashcards-App
 
-1. The UdaciCards is a mobile application (IOS) that allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called decks, add flashcards to those decks, then take quizzes on those decks. 
+1. The UdaciCards is a mobile application (IOS) that allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called decks, add flashcards to those decks, then take quizzes on those decks.
+
+# Testing
+1. Only tested on IOS.
 
 # Installation
 

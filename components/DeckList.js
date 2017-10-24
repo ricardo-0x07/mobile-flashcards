@@ -5,6 +5,7 @@ import { Text, TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
 import lodash from 'lodash';
 import DeckListItem from './DeckListItem';
 import { getDecks } from '../utils/api';
+import { white } from '../utils/colors';
 
 class DeckList extends Component {
     static navigationOptions = {
@@ -15,7 +16,7 @@ class DeckList extends Component {
     }
     componentWillMount() {
         getDecks()
-            .then(decks => this.setState({decks}))
+            .then(decks => this.setState({decks: decks ? decks : []}))
     }
     _keyExtractor = (item, index) => {
         return index
@@ -46,7 +47,7 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
     view: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: white,
         justifyContent: 'center',
         alignItems: 'center'
     },

@@ -13,24 +13,19 @@ class CardList extends Component {
         questions: []
     }
     componentWillMount() {
-        console.log('componentDidMount  this.props', this.props);
         getDeck(this.props.navigation.state.params.deck.title)
             .then(deck => this.setState({deck}))
         this.props.receiveDecks();
     }
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps nextProps', nextProps); 
     }
     onRowPress = () => {
-        console.log('Navigate to DeckViews this.props', this.props);
         this.props.navigation.navigate('DeckView', {deck: this.state.deck})
     }
     renderRow = (card) => {
-        console.log('renderRow card', card)
         return <CardListItem card={card} onRowPress={() => this.props.navigation.navigate('DeckView', {card: card.item})}/>
     }
     render() {
-        console.log('CardList render this', this);
         const { deck } = this.state;
         if(!deck) {
             return (

@@ -3,10 +3,12 @@ import { Button, Text } from 'native-base';
 import { TouchableWithoutFeedback, View, Platform } from 'react-native';
 import { Card, CardSection, Input } from './common';
 import { getDeck } from '../utils/api';
+import { white } from '../utils/colors';
 import {
     clearLocalNotification,
     setLocalNotification
 } from '../utils/helpers';
+import styles from './QuizViewStyles';
 
 class QuizView extends Component {
     static navigationOptions = {
@@ -34,16 +36,18 @@ class QuizView extends Component {
             });
     }
     onButtonPress = (answer) => {
-        let currentCard = this.state.currentCard + 1;
         let score = this.state.card.answer === answer ? this.state.score + 1 : this.state.score;
+        this.setState({
+            score: score
+        })    
+        let currentCard = this.state.currentCard + 1;
         if(!(currentCard < this.state.deck.questions.length)) {
             this.setState({showScore: true})
         } else {
             this.setState({
                 currentCard,
                 card: this.state.deck.questions[currentCard],
-                score: score
-            })    
+            })        
         }
     }
     render() {
@@ -70,7 +74,6 @@ class QuizView extends Component {
                 </View>
             )
         }
-        console.log('this.props', this.props);
         const { question, answer } = this.state.card;
         return (
             <View style={styles.container}>
@@ -87,7 +90,7 @@ class QuizView extends Component {
                     </CardSection>}
                     <CardSection style={styles.cardSection}>
                         <Text style={[{fontSize: 30}, styles.titleStyle]}>
-                            {this.state.currentCard}/{this.state.deck.questions.length}
+                            {this.state.currentCard+1}/{this.state.deck.questions.length}
                         </Text>
                     </CardSection>
                     <CardSection style={styles.cardSection}>
@@ -107,42 +110,4 @@ class QuizView extends Component {
     }
 }
 
-const styles = {
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center'
-    },
-    titleStyle: {
-        fontSize: 60,
-        paddingLeft: 15,
-        textAlign: 'center',
-        justifyContent: 'center'
-    },
-    btn: {
-        borderRadius: 5,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    cardSection: {
-        borderColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: Platform.OS === 'ios' ? 16 : 2,
-        padding: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 17,
-        justifyContent: 'center',
-        shadowColor: 'rgba(0,0,0,0.24)',
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        }
-    }
-}
 export default QuizView

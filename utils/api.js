@@ -5,6 +5,9 @@ export function getDecks() {
     return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
     .then(results => {
         let data = JSON.parse(results);
+        if(!data) {
+            return []
+        }
         let keys = Object.keys(data);
         let decks = keys.map(function (item) {
             let card = data[item];

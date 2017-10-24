@@ -1,32 +1,41 @@
 import React, { Component } from 'react';
 import { Button, Text } from 'native-base';
-import { View, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { Card, CardSection, Input } from './common';
 import { connect } from 'react-redux';
-import {cardUpdate, addCard, receiveDecks} from '../actions';
+import * as actions from '../actions';
 import { getDeck, addCardToDeck } from '../utils/api';
+import { white } from '../utils/colors';
+import styles from './FormStyles';
 
 class CardForm extends Component {
     static navigationOptions = {
         title: 'Card Form'
     };
-    componentDidMount() {
-        this.props.receiveDecks();
+    state = {
+        behavior: 'padding',
+        deck: {
+            title: '',
+            questions: []
+        }
     }
+    componentDidMount() {
+        getDeck(this.props.navigation.state.params.deck.title)
+            .then(deck => this.setState({deck}))
+    }    
     addCard = (key, card) => {
         addCardToDeck({key, card})
             .then(() => {
-                this.props.navigation.navigate('DeckView', {deck: this.props.deck});
+                this.props.navigation.navigate('DeckView', {deck: this.state.deck});
                 this.props.cardUpdate({ prop: 'question', value: ''});
                 this.props.cardUpdate({ prop: 'answer', value: ''});
             });
     }
     render() {
-        console.log('CardForm render this.props',this.props);
-        const { question, answer, deck} = this.props;
-        const { title } = deck;
+        const { question, answer} = this.props;
+        const { title } = this.state.deck;
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView behavior={this.state.behavior} style={styles.container}>
                 <Card style={styles.card}>
                     <CardSection style={styles.cardSection}>
                         <Input 
@@ -48,61 +57,16 @@ class CardForm extends Component {
                         <Button style={styles.btn} onPress={() => this.addCard(title,{answer, question})}><Text>Submit</Text></Button>
                     </CardSection>
                 </Card>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
 
-const styles = {
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center'
-    },
-    titleStyle: {
-        fontSize: 60,
-        paddingLeft: 15,
-        textAlign: 'center',
-        justifyContent: 'center'
-    },
-    btn: {
-        borderRadius: 5,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    cardSection: {
-        borderColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: Platform.OS === 'ios' ? 16 : 2,
-        padding: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 17,
-        justifyContent: 'center',
-        shadowColor: 'rgba(0,0,0,0.24)',
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        }
-    }
-}
-
-const mapStateToProps = (state, ownProps) => {
-    const { decks } = state;
+const mapStateToProps = state => {
     const { question, answer } = state.cardForm;
     return {
-        deck: decks.filter(item => item.title = ownProps.navigation.state.params.deck.title)[0],
         question,
         answer
     };
 };
-export default connect(mapStateToProps, {
-    cardUpdate,
-    addCard,
-    receiveDecks
-})(CardForm);
+export default connect(mapStateToProps, actions)(CardForm);
